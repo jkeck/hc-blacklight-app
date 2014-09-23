@@ -38,3 +38,8 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'blacklight'
+
+gem "jettywrapper", "~> 1.7"
+gem "devise"
+gem "devise-guests", "~> 0.3"
