@@ -1,7 +1,7 @@
-id: 1
-title_display: "Title1"
-format: "Book"
-pub_date: "2000"
+id: 6
+title_display: "A collection of books"
+format: "Collection"
+pub_date: "1923"
 language_facet: "English"
 url_fulltext_display:
   - "https://wiki.duraspace.org/display/hydra/Hydra+Connect+2+-+Fall+2014"
