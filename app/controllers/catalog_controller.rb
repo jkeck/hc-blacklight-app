@@ -3,6 +3,7 @@
 class CatalogController < ApplicationController  
 
   include Blacklight::Catalog
+  #before_filter :add_limit_language_behavior, only: :index
 
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
@@ -31,6 +32,8 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.title_field = 'title_display'
     config.index.display_type_field = 'format'
+    #config.index.thumbnail_field = :url_suppl_display
+    # config.index.thumbnail_method = :render_my_thumbnail
 
     # solr field configuration for document/show views
     #config.show.title_field = 'title_display'
@@ -55,10 +58,10 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'format', :label => 'Format'
+    config.add_facet_field 'format', :label => 'Format'#, partial: "custom_format_facet"
     config.add_facet_field 'pub_date', :label => 'Publication Year', :single => true
     config.add_facet_field 'subject_topic_facet', :label => 'Topic', :limit => 20 
-    config.add_facet_field 'language_facet', :label => 'Language', :limit => true 
+    config.add_facet_field 'language_facet', :label => 'Language', :limit => true#, helper_method: :render_language_facet_value
     config.add_facet_field 'lc_1letter_facet', :label => 'Call Number' 
     config.add_facet_field 'subject_geo_facet', :label => 'Region' 
     config.add_facet_field 'subject_era_facet', :label => 'Era'  
@@ -88,6 +91,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'published_display', :label => 'Published'
     config.add_index_field 'published_vern_display', :label => 'Published'
     config.add_index_field 'lc_callnum_display', :label => 'Call number'
+    #config.add_index_field 'url_fulltext_display', label: "Online", helper_method: :render_url_fulltext_display
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 
@@ -98,13 +102,11 @@ class CatalogController < ApplicationController
     config.add_show_field 'author_display', :label => 'Author'
     config.add_show_field 'author_vern_display', :label => 'Author'
     config.add_show_field 'format', :label => 'Format'
-    config.add_show_field 'url_fulltext_display', :label => 'URL'
-    config.add_show_field 'url_suppl_display', :label => 'More Information'
+    #config.add_show_field 'url_fulltext_display', label: "Online", helper_method: :render_url_fulltext_display
     config.add_show_field 'language_facet', :label => 'Language'
     config.add_show_field 'published_display', :label => 'Published'
     config.add_show_field 'published_vern_display', :label => 'Published'
     config.add_show_field 'lc_callnum_display', :label => 'Call number'
-    config.add_show_field 'isbn_t', :label => 'ISBN'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -178,5 +180,13 @@ class CatalogController < ApplicationController
     # mean") suggestion is offered.
     config.spell_max = 5
   end
+
+  private
+  # def add_limit_language_behavior
+  #   self.solr_search_params_logic << :limit_language
+  # end
+  # def limit_language(solr_params, user_params)
+  #   solr_params[:fq] << '{!raw f=language_facet}English'
+  # end
 
 end 

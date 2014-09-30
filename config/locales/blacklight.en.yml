@@ -1,3 +1,7 @@
 en:
   blacklight:
     application_name: 'Blacklight'
+    search:
+      form:
+        submit: "Search"
+        q: "Search..."

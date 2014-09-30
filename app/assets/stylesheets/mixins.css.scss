@@ -1,0 +1,6 @@
+@mixin search-button {
+  background-color: #990000;
+  &:hover {
+    color: green;
+  }
+}

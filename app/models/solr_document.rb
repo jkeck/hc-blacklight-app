@@ -18,4 +18,8 @@ class SolrDocument
   # Recommendation: Use field names from Dublin Core
   use_extension( Blacklight::Solr::Document::DublinCore)    
 
+  # def to_model
+  #   DemoModel
+  # end
+
 end
